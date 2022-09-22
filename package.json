@@ -1,0 +1,18 @@
+{
+	"name": "chat",
+	"version": "1.0.0",
+	"description": "A chat app using WebSocket API",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"test": "nodemon index.js"
+	},
+	"author": "sanko",
+	"license": "ISC",
+	"dependencies": {
+		"ws": "^8.8.1"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.20"
+	}
+}
