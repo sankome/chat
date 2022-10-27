@@ -1,23 +1,28 @@
 const ws = require("ws");
-const server = new ws.Server({port: 80});
+const http = require("http");
+
+let httpServer;
+let server;
 
 const waiting = new Map();
-
 const sockets = [];
 const passwords = [];
-// sockets["test"] = new Map();
-
 const rooms = new Map();
 
 let index = 0;
-server.on("connection", onConnection);
+
+function chat(app, port, host) {
+	httpServer = http.createServer(app);
+	httpServer.listen(port, host);
+	server = new ws.Server({server: httpServer, path: "/chat"});
+	
+	server.on("connection", onConnection);
+}
 
 function onConnection(socket) {
 	console.log("socket(" + index + ") connected");
 	
 	waiting.set(socket, {id: index++});
-	// sockets["test"].set(socket, {id: index++});
-	// rooms.set(socket, "test");
 	
 	socket.addEventListener("close", onSocketClose);
 	socket.addEventListener("message", onSocketMessage);
@@ -85,7 +90,11 @@ function onSocketMessage(event) {
 			} else {
 				sockets[data.room] = new Map();
 				passwords[data.room] = data.password;
+				
+				console.log("chat room(" + data.room + ") created");
 			}
+			
+			data.username = data.username.substr(0, 10);
 			
 			console.log("socket(" + waiting.get(socket).id + ") set username(" + data.username +")");
 			
@@ -96,7 +105,7 @@ function onSocketMessage(event) {
 				username: data.username,
 				x: 100 * Math.random(),
 				y: 100 * Math.random(),
-				colour: Math.floor(0xFFFFFF * Math.random()),	
+				colour: data.colour,	
 			};
 			
 			sockets[data.room].forEach((value, socket) => {
@@ -109,10 +118,6 @@ function onSocketMessage(event) {
 					colour: info.colour,
 				}));
 			});
-			
-			// let r = [];
-			// for (let room in sockets) r.push(room);
-			// console.log("current rooms: " + r.join(", "));
 			
 			socket.send(JSON.stringify({
 				type: "password",
@@ -147,6 +152,8 @@ function onSocketMessage(event) {
 			let room = rooms.get(socket);
 			let username = sockets[room].get(socket).username;
 			let id = sockets[room].get(socket).id;
+			data.message = data.message.substr(0, 50);
+			
 			console.log("socket(" + sockets[room].get(socket).id + ")" + (username? "(" + username + ")": "") + " sent message(" + data.message +")");
 			
 			sockets[room].forEach((info, socket) => {
@@ -206,7 +213,7 @@ function onSocketMessage(event) {
 			sockets[room].get(socket).x = data.x;
 			sockets[room].get(socket).y = data.y;
 			
-			console.log("socket(" + id + ")(" + data.username + ") moved(" + data.x + "," + data.y + ")");
+			console.log("socket(" + id + ")(" + username + ") moved(" + data.x + "," + data.y + ")");
 			
 			sockets[room].forEach((value, socket) => {
 				socket.send(JSON.stringify({
@@ -223,3 +230,5 @@ function onSocketMessage(event) {
 		}
 	}
 }
+
+module.exports = chat;
