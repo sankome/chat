@@ -11,10 +11,8 @@ const rooms = new Map();
 
 let index = 0;
 
-function chat(app, port, host) {
-	httpServer = http.createServer(app);
-	httpServer.listen(port, host);
-	server = new ws.Server({server: httpServer, path: "/chat"});
+function chat(server) {
+	server = new ws.Server({server, path: "/chat"});
 	
 	server.on("connection", onConnection);
 }

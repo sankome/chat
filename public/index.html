@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="robots" content="noindex">
+		<title>Sanko Chat</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="script.js" defer></script>
+		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<div id="connect">
+			<h1>Sanko Chat</h1>
+			<p><button id="connect__button">connect</button></p>
+		</div>
+		<div id="rooms">
+			<h1>Select Chat Room</h1>
+			<p>Username</p>
+			<p><input id="rooms__username"></p>
+			<p>Colour</p>
+			<p id="rooms__select-colour">
+				<input class="rooms__colour" type="radio" id="doux" name="colour" value="1" checked><label for="doux">Doux</label>
+				<input class="rooms__colour" type="radio" id="mort" name="colour" value="2"><label for="mort">Mort</label>
+				<input class="rooms__colour" type="radio" id="tard" name="colour" value="3"><label for="tard">Tard</label>
+				<input class="rooms__colour" type="radio" id="vita" name="colour" value="4"><label for="vita">Vita</label>
+			</p>
+			<hr/>
+			<form id="rooms__form">
+				<ul id="rooms__list">
+					<li><input type="submit" value="room1"></li>
+					<li><input type="submit" value="room2"></li>
+					<li><input type="submit" value="room3"></li>
+				</ul>
+			</form>
+			<hr/>
+			<form id="rooms__create">
+				<p>Room name</p>
+				<p><input id="rooms__name"></p>
+				<p>Password</p>
+				<p><input id="rooms__password"></p>
+				<p><input type="submit" value="Create/Enter"></p>
+			</form>
+		</div>
+		<div id="chat">
+			<div id="chat__display-log-form">
+				<div id="chat__display"></div>
+				<div id="chat__log-form">
+					<div id="chat__log"></div>
+					<form id="chat__form">
+						<input id="chat__input">
+						<input type="submit" value="Send">
+					</form>
+				</div>
+			</div>
+			<button id="chat__leave">Leave</button>
+		</div>
+	</body>
+</html>
