@@ -159,7 +159,13 @@ function onOpen(event) {
 }
 
 function onMessage(event) {
-	let data = JSON.parse(event.data);
+	let data;
+	try {
+		data = JSON.parse(event.data);
+	} catch (error) {
+		console.log(error.toString());
+		return;
+	}
 	
 	switch(data.type) {
 		case "rooms": {

@@ -16,6 +16,10 @@
 		<div id="connect">
 			<h1>Sanko Chat</h1>
 			<p><button id="connect__button">connect</button></p>
+			
+			<section class="credits">
+				<p><a href="https://arks.itch.io/dino-characters" target="_blank">Dino Characters</a> by <a href="https://twitter.com/ArksDigital" target="_blank">Arks💢</a><p>
+			</section>
 		</div>
 		<div id="rooms">
 			<h1>Select Chat Room</h1>
@@ -23,10 +27,34 @@
 			<p><input id="rooms__username"></p>
 			<p>Colour</p>
 			<p id="rooms__select-colour">
-				<input class="rooms__colour" type="radio" id="doux" name="colour" value="1" checked><label for="doux">Doux</label>
-				<input class="rooms__colour" type="radio" id="mort" name="colour" value="2"><label for="mort">Mort</label>
-				<input class="rooms__colour" type="radio" id="tard" name="colour" value="3"><label for="tard">Tard</label>
-				<input class="rooms__colour" type="radio" id="vita" name="colour" value="4"><label for="vita">Vita</label>
+				<span>
+					<input class="rooms__colour" type="radio" id="doux" name="colour" value="1" checked>
+					<label for="doux">
+						<span class="rooms__character rooms__character--doux"></span>
+						<span>Doux</span>
+					</label>
+				</span>
+				<span>
+					<input class="rooms__colour" type="radio" id="mort" name="colour" value="2">
+					<label for="mort">
+						<span class="rooms__character rooms__character--mort"></span>
+						<span>Mort</span>
+					</label>
+				</span>
+				<span>
+					<input class="rooms__colour" type="radio" id="tard" name="colour" value="3">
+					<label for="tard">
+						<span class="rooms__character rooms__character--tard"></span>
+						<span>Tard</span>
+					</label>
+				</span>
+				<span>
+					<input class="rooms__colour" type="radio" id="vita" name="colour" value="4">
+					<label for="vita">
+						<span class="rooms__character rooms__character--vita"></span>
+						<span>Vita</span>
+					</label>
+				</span>
 			</p>
 			<hr/>
 			<form id="rooms__form">
