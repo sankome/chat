@@ -133,10 +133,11 @@ function onChatLeaveClick(event) {
 
 //common
 
-function changeView(nextView) {
+async function changeView(nextView) {
 	view = nextView;
 	switch(view) {
 		case ROOMS:
+			Notification.requestPermission();
 			break;
 		case CHAT:
 			break;
@@ -202,6 +203,16 @@ function onMessage(event) {
 			if (atBottom) chatLog.scrollTop = chatLog.scrollTopMax;
 			
 			user.showMessage(data.message);
+			
+			if (!user.self && Notification.permission === "granted") {
+				let notification = new Notification("Sanko Chat", {
+					body: data.username + ": " + data.message,
+					tag: data.username,
+				});
+				setTimeout(() => {
+					notification.close();
+				}, 3000);
+			}
 			break;
 		}
 		case "join": {
@@ -217,6 +228,17 @@ function onMessage(event) {
 			
 			let user = new User(data.id, data.username, data.x, data.y, data.colour);
 			chatDisplay.appendChild(user.element);
+			
+			if (Notification.permission === "granted") {
+				let notification = new Notification("Sanko Chat", {
+					body: data.username + " joined the chat",
+					tag: data.username,
+				});
+				setTimeout(() => {
+					notification.close();
+				}, 3000);
+			}
+			
 			break;
 		}
 		case "leave": {
@@ -233,6 +255,17 @@ function onMessage(event) {
 			let user = users.find(user => user.id == data.id);
 			user.element.parentNode?.removeChild(user.element);
 			users.splice(users.findIndex(user => user.id == data.id), 1);
+			
+			if (Notification.permission === "granted") {
+				let notification = new Notification("Sanko Chat", {
+					body: data.username + " left the chat",
+					tag: data.username,
+				});
+				setTimeout(() => {
+					notification.close();
+				}, 3000);
+			}
+			
 			break;
 		}
 		case "move": {
