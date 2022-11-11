@@ -9,11 +9,22 @@ const sockets = [];
 const passwords = [];
 const rooms = new Map();
 
+let pingId;
 let index = 0;
 
 function chat(server) {
 	server = new ws.Server({server, path: "/chat"});
 	server.on("connection", onConnection);
+	pingId = setInterval(ping, 50000);
+}
+
+function ping() {
+	waiting.forEach((value, socket) => {
+		socket.send(JSON.stringify({type: "ping"}));
+	});
+	rooms.forEach((value, socket) => {
+		socket.send(JSON.stringify({type: "ping"}));
+	});
 }
 
 function onConnection(socket) {

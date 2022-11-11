@@ -169,6 +169,10 @@ function onMessage(event) {
 	}
 	
 	switch(data.type) {
+		case "ping": {
+			console.log("ping!");
+			break;
+		}
 		case "rooms": {
 			roomsList.textContent = null;
 			if (data.rooms.length) {
