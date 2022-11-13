@@ -386,10 +386,10 @@ function User(id, name, x, y, colour, self = false) {
 		this.time += time;
 		let frame;
 		if (this.moving) {
-			if (this.time > 0.75) this.time -= 0.75;
+			while (this.time > 0.75) this.time -= 0.75;
 			frame = 4 + Math.floor(this.time * 8);
 		} else {
-			if (this.time > 0.375) this.time -= 0.375;
+			while (this.time > 0.375) this.time -= 0.375;
 			frame = Math.floor(this.time * 8);
 		}
 		this.imageElement.style.backgroundPosition = String(frame * -48) + "px";
@@ -425,7 +425,12 @@ function User(id, name, x, y, colour, self = false) {
 }
 
 let prev;
-requestAnimationFrame(onFrame);
+let rafId = requestAnimationFrame(onFrame);
+document.addEventListener("visibilitychange", event => {
+	if (event.target["hidden"]) cancelAnimationFrame(rafId);
+	else rafId = requestAnimationFrame(onFrame);
+});
+
 function onFrame(timestamp) {
 	if (prev == undefined) prev = timestamp;
 	const time = (timestamp - prev) * 0.001;
@@ -460,7 +465,7 @@ function onFrame(timestamp) {
 	}
 	
 	prev = timestamp;
-	requestAnimationFrame(onFrame);
+	rafId = requestAnimationFrame(onFrame);
 }
 
 function sendMessage(message) {
